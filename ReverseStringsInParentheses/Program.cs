@@ -36,7 +36,6 @@ namespace ReverseStringsInParentheses
         static string ReverseStringsInParentheses(string input)
         {
             Stack<char> myStack = new Stack<char>();
-            string currentSegment = string.Empty;
             string output = string.Empty;
             
             for (int i = 0; i < input.Length; i++)
@@ -44,11 +43,9 @@ namespace ReverseStringsInParentheses
                 // identify the targeted substring
                 if (input[i] == '(')
                 {
-                    i++;
-                    while (input[i] != ')')
+                    while (input[++i] != ')')
                     {
                         myStack.Push(input[i]);
-                        i++;
                     }
                     // reversing the targeted substring and add it to the output string
                     foreach (var ch in myStack)
