@@ -5,9 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReverseStringsInParentheses
 {
@@ -35,33 +32,51 @@ namespace ReverseStringsInParentheses
 
         static string ReverseStringsInParentheses(string input)
         {
-            Stack<char> myStack = new Stack<char>();
-            string output = string.Empty;
-            
-            for (int i = 0; i < input.Length; i++)
+            if (!input.Contains("("))
             {
-                // identify the targeted substring
-                if (input[i] == '(')
-                {
-                    while (input[++i] != ')')
-                    {
-                        myStack.Push(input[i]);
-                    }
-                    // reversing the targeted substring and add it to the output string
-                    foreach (var ch in myStack)
-                    {
-                        output += ch;
-                    }
-                    // clear the stack for the next targeted substring
-                    myStack.Clear();
-                }
-                else
-                {
-                    // add 
-                    output += input[i];
-                }
+                return input;
             }
-            return output;
+            else
+            {
+                Stack<char> myStack = new Stack<char>();
+                string output = string.Empty;
+                string backup = string.Empty;
+
+                for (int i = 0; i < input.Length; i++)
+                {
+                    // identify the targeted substring
+                    if (input[i] == '(')
+                    {
+                        backup += input[i];
+                        while (input[++i] != ')')
+                        {
+                            if (input[i] == '(')
+                            {
+                                output += backup;
+                                backup = string.Empty;
+                                myStack.Clear();
+                            }
+                            else
+                            {
+                                backup += input[i];
+                                myStack.Push(input[i]);
+                            }
+                        }
+                        // reversing the targeted substring and add it to the output string
+                        foreach (var ch in myStack)
+                        {
+                            output += ch;
+                        }
+                        // clear the stack for the next targeted substring
+                        myStack.Clear();
+                    }
+                    else
+                    {
+                        output += input[i];
+                    }
+                }
+                return ReverseStringsInParentheses(output);
+            }
         }
     }
 }
