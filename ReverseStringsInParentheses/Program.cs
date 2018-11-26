@@ -44,12 +44,12 @@ namespace ReverseStringsInParentheses
                 // identify the targeted substring
                 if (input[i] == '(')
                 {
+                    i++;
                     while (input[i] != ')')
                     {
-                        i++;
                         myStack.Push(input[i]);
+                        i++;
                     }
-
                     // reversing the targeted substring and add it to the output string
                     foreach (var ch in myStack)
                     {
