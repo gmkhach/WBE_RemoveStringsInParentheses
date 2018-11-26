@@ -47,13 +47,17 @@ namespace ReverseStringsInParentheses
                     // identify the targeted substring
                     if (input[i] == '(')
                     {
+                        // creating a backup substring in case there is a nested parentheses
                         backup += input[i];
                         while (input[++i] != ')')
                         {
                             if (input[i] == '(')
                             {
+                                // using the backup substring to retain the original order of characters
                                 output += backup;
+                                // restarting the backup substring
                                 backup = string.Empty;
+                                // restarting the stack
                                 myStack.Clear();
                             }
                             else
