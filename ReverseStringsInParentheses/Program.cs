@@ -35,47 +35,35 @@ namespace ReverseStringsInParentheses
 
         static string ReverseStringsInParentheses(string input)
         {
-            List<string> segments = new List<string>();
             Stack<char> myStack = new Stack<char>();
             string currentSegment = string.Empty;
             string output = string.Empty;
             
-            // removes the parentheses and puts the target substrings in indicies 1 and 3
-            foreach(var ch in input)
+            for (int i = 0; i < input.Length; i++)
             {
-                if (ch == '(' || ch == ')')
+                // identify the targeted substring
+                if (input[i] == '(')
                 {
-                    segments.Add(currentSegment);
-                    currentSegment = string.Empty;
+                    while (input[i] != ')')
+                    {
+                        i++;
+                        myStack.Push(input[i]);
+                    }
+
+                    // reversing the targeted substring and add it to the output string
+                    foreach (var ch in myStack)
+                    {
+                        output += ch;
+                    }
+                    // clear the stack for the next targeted substring
+                    myStack.Clear();
                 }
                 else
                 {
-                    currentSegment += ch;
+                    // add 
+                    output += input[i];
                 }
             }
-            segments.Add(currentSegment);
-
-            // reversing the target substrings
-            for (int i = 1; i < 4; i += 2)
-            {
-                foreach (var ch in segments[i])
-                {
-                    myStack.Push(ch);
-                }
-                segments[i] = string.Empty;
-                foreach (var ch in myStack)
-                {
-                    segments[i] += ch;
-                }
-                myStack.Clear();
-            }
-
-            // rebuilding the input string with the target substrings reversed
-            foreach(var segment in segments)
-            {
-                output += segment;
-            }
-
             return output;
         }
     }
